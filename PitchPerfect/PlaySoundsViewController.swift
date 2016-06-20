@@ -11,6 +11,12 @@ import AVFoundation
 
 class PlaySoundsViewController: UIViewController {
     
+    @IBOutlet weak var OuterStackView: UIStackView!
+    @IBOutlet weak var innerStackView1: UIStackView!
+    @IBOutlet weak var innerStackView2: UIStackView!
+    @IBOutlet weak var innerStackView3: UIStackView!
+    @IBOutlet weak var innerStackView4: UIStackView!
+    
     @IBOutlet weak var snailButton: UIButton!
     @IBOutlet weak var chipmunkButton: UIButton!
     @IBOutlet weak var rabbitButton: UIButton!
@@ -57,20 +63,40 @@ class PlaySoundsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("PlaySoundsViewController loaded")
+        configureStackViewOrientation()
         setupAudio()
         // Do any additional setup after loading the view.
     }
 
     override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
         configureUI(.NotPlaying)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewWillTransitionToSize(size: CGSize, withTransitionCoordinator coordinator: UIViewControllerTransitionCoordinator) {
+        coordinator.animateAlongsideTransition({ (context) -> Void in
+            self.configureStackViewOrientation()
+            }, completion: nil)
     }
     
-
+    func configureStackViewOrientation() {
+        let orientation = UIApplication.sharedApplication().statusBarOrientation
+        if orientation.isPortrait {
+            OuterStackView.axis = .Vertical
+            setInnerStackViewsAxis(.Horizontal)
+        } else {
+            OuterStackView.axis = .Horizontal
+            setInnerStackViewsAxis(.Vertical)
+        }
+    }
+    
+    func setInnerStackViewsAxis(axisStyle: UILayoutConstraintAxis)  {
+        self.innerStackView1.axis = axisStyle
+        self.innerStackView2.axis = axisStyle
+        self.innerStackView3.axis = axisStyle
+        self.innerStackView4.axis = axisStyle
+    }
+    
     /*
     // MARK: - Navigation
 

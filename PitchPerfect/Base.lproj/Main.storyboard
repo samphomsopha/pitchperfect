@@ -157,8 +157,13 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="OuterStackView" destination="ccM-h7-5NA" id="bBM-A7-NAj"/>
                         <outlet property="chipmunkButton" destination="qv8-Xg-njK" id="jia-xZ-juu"/>
                         <outlet property="echoButton" destination="4K0-bP-l9a" id="2A5-nx-TnU"/>
+                        <outlet property="innerStackView1" destination="duZ-vu-WtC" id="WEv-7p-9aB"/>
+                        <outlet property="innerStackView2" destination="jXV-ek-lko" id="MKD-GX-4U2"/>
+                        <outlet property="innerStackView3" destination="chm-cL-GI0" id="e4I-Rv-HTT"/>
+                        <outlet property="innerStackView4" destination="rjY-w8-xK7" id="uPX-sZ-G9e"/>
                         <outlet property="rabbitButton" destination="rYz-oH-5kd" id="yNU-AG-T4z"/>
                         <outlet property="reverbButton" destination="lbf-Fl-aFQ" id="hTK-Ga-qbX"/>
                         <outlet property="snailButton" destination="vIE-7B-bye" id="Dea-2W-qNB"/>
