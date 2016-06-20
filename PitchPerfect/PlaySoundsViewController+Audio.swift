@@ -94,7 +94,7 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
             }
             
             // schedule a stop timer for when audio finishes playing
-            self.stopTimer = NSTimer(timeInterval: delayInSeconds, target: self, selector: "stopAudio", userInfo: nil, repeats: false)
+            self.stopTimer = NSTimer(timeInterval: delayInSeconds, target: self, selector: #selector(PlaySoundsViewController.stopAudio), userInfo: nil, repeats: false)
             NSRunLoop.mainRunLoop().addTimer(self.stopTimer!, forMode: NSDefaultRunLoopMode)
         }
         
@@ -104,9 +104,10 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
             showAlert(Alerts.AudioEngineError, message: String(error))
             return
         }
-        
+        setSessionPlayerOn()
         // play the recording!
         audioPlayerNode.play()
+        
     }
     
     
@@ -134,6 +135,8 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
             audioEngine.stop()
             audioEngine.reset()
         }
+        
+        setSessionPlayerOff()
     }
     
     
@@ -164,6 +167,29 @@ extension PlaySoundsViewController: AVAudioPlayerDelegate {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: Alerts.DismissAlert, style: .Default, handler: nil))
         self.presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    func setSessionPlayerOn()
+    {
+        do {
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayAndRecord)
+        } catch _ {
+        }
+        do {
+            try AVAudioSession.sharedInstance().setActive(true)
+        } catch _ {
+        }
+        do {
+            try AVAudioSession.sharedInstance().overrideOutputAudioPort(AVAudioSessionPortOverride.Speaker)
+        } catch _ {
+        }
+    }
+    func setSessionPlayerOff()
+    {
+        do {
+            try AVAudioSession.sharedInstance().setActive(false)
+        } catch _ {
+        }
     }
 
     
